@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var Dropbox = require('dropbox');
+var bodyParser = require('body-parser');
+var multer = require('multer'); // v1.0.5
+var upload = multer(); // for parsing multipart/form-data
 
+router.use(bodyParser.json()); // for parsing application/json
+router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 var authredirect = "";
 
 //override to allow code not token return
@@ -91,10 +96,15 @@ router.get('/authresponse', function(req, res, next) {
     }
 });
 
-// webhook end point
+// webhook end point get handles verification
 router.get('/change', function(req, res, next) {
     console.log(req);
     res.send(req.query.challenge);
+});
+// .. post handles change alerts
+router.post('/change', upload.array(), function (req, res, next) {
+  console.log(req.body);
+  res.json(req.body);
 });
 
 router.get('/files', function(req, res, next) {

@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
 router.get('/authenticate', function(req, res, next) {
     
     var dbx = new Dropbox({ clientId: process.env.dbclientid });
-    authredirect = req.protocol + "://" + req.get('host') + "/api/authresponse";
+    authredirect = (req.hostname == "localhost")?"http":"https" + "://" + req.get('host') + "/api/authresponse";
     console.log(process.env.dbclientid);
     var authUrl = dbx.getAuthenticationUrl(authredirect);
     console.log(authUrl);

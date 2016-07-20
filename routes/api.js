@@ -94,7 +94,7 @@ router.get('/authresponse', function(req, res, next) {
 // webhook end point
 router.get('/change', function(req, res, next) {
     console.log(req);
-    res.render('index', { title: 'Express' });
+    res.send(req.query.challenge);
 });
 
 router.get('/files', function(req, res, next) {

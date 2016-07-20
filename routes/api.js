@@ -93,7 +93,7 @@ router.get('/authresponse', function(req, res, next) {
 
 // webhook end point
 router.get('/change', function(req, res, next) {
-    console.log(response);
+    console.log(req);
     res.render('index', { title: 'Express' });
 });
 

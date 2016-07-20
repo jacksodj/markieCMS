@@ -41,6 +41,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//initiate authentication sequence
 router.get('/authenticate', function(req, res, next) {
     
     var dbx = new Dropbox({ clientId: process.env.dbclientid });
@@ -51,6 +52,7 @@ router.get('/authenticate', function(req, res, next) {
     res.redirect(authUrl);
 });
 
+//handle response from dropbox, and convert code into bearer token
 router.get('/authresponse', function(req, res, next) {
     if (req.query.hasOwnProperty("code")) {
         process.env.tokencode = req.query.code;
@@ -89,6 +91,12 @@ router.get('/authresponse', function(req, res, next) {
     }
 });
 
+// webhook end point
+router.get('/change', function(req, res, next) {
+    console.log(response);
+    res.render('index', { title: 'Express' });
+});
+
 router.get('/files', function(req, res, next) {
     checkAccessToken(res);
     
@@ -103,5 +111,6 @@ router.get('/files', function(req, res, next) {
     
     res.render('index', { title: 'Express' });
 });
+
 
 module.exports = router;
